@@ -1,28 +1,41 @@
 import React from "react";
 import { useState } from "react";
+import axios from 'axios';
 import bg from "../assets/imagens/estatua.png"
 const ContactForm = () => {
+
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: '',
-    })
-    const handleChange = (e) =>{
-        setFormData({
-            ...formData,[e.target.name]: e.target.value
-        });
-    }
-    const handleSubmit = (e) =>{
-        e.preventDefault(); 
-
-        console.log(`Mensagem enviada ${formData.name} , ${formData.email}`)
-        console.log(`${formData.message}`)
-
-        alert('Mensagem enviada com sucesso')
-
-        setFormData({name:'', email:'', message:''}) /* limpa os campos nome email e mensagem */
+      name: "",
+      email: "",
+      message: "",
+    });
    
-    }
+    const handleChange = (e) => {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          const response = await axios.post("https://backend-portalturismo-qoo2.onrender.com/api/contact", {
+              name: formData.name,
+              email: formData.email,
+              message: formData.message,
+          });
+          alert("menssagem cadastrada com sucesso!!" + `nome: ${formData.name} email: ${formData.email}`)
+          window.location.href = "/"
+      } catch (error) {
+          if (error.response) {
+              alert("Erro ao enviar mensagem de contato")
+          } else {
+              alert("erro ao conectar ao servidor")
+          }
+      }
+    };
+   
     return(
         <>
         <div
