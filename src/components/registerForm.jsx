@@ -8,7 +8,7 @@ const RegisterForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await   axios.post ("https://localhost:500/api/users" , {
+            const response = await   axios.post ("https://backend-portalturismo-qoo2.onrender.com/api/users" , {
                 name: nome,
                 email,
                 password : senha
